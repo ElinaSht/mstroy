@@ -18,23 +18,30 @@ const emits = defineEmits<{
   <div class="edit-panel">
     <h4 class="mode">
       <span class="name">Режим: </span>
-      <span>{{ editing ? 'редактирование' : 'просмотр' }}</span>
+      <span data-testid="mode">{{ editing ? 'редактирование' : 'просмотр' }}</span>
     </h4>
 
     <div class="edit-buttons">
-      <div v-if="editing" class="change">
+      <div v-if="editing" class="change" data-testid="buttons">
         <MSButton
-          icon="bi bi-arrow-counterclockwise"
-          :disabled="props.canUndo"
+          icon="bi-arrow-counterclockwise"
+          :disabled="!props.canUndo"
           @click="emits('undo')"
+          data-testid="undo-button"
         />
 
-        <MSButton icon="bi bi-arrow-clockwise" :disabled="props.canRedo" @click="emits('redo')" />
+        <MSButton
+          icon="bi-arrow-clockwise"
+          :disabled="!props.canRedo"
+          @click="emits('redo')"
+          data-testid="redo-button"
+        />
       </div>
 
       <MSButton
-        :icon="editing ? 'bi bi-floppy' : 'bi bi-pencil-square'"
+        :icon="editing ? 'bi-floppy' : 'bi-pencil-square'"
         @click="editing = !editing"
+        data-testid="edit-button"
       />
     </div>
   </div>
